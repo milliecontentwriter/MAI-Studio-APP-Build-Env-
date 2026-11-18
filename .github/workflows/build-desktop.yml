@@ -22,26 +22,33 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
+        os:
+          - windows-latest
+          - macos-latest
+          - ubuntu-latest
+
+        platform:
+          - win
+          - mac
+          - linux
+
+        env: ${{ github.event_name == 'workflow_dispatch' && inputs.env != 'both' && fromJSON(format('["{0}"]', inputs.env)) || fromJSON('["qa","prod"]') }}
+
+        exclude:
           - os: windows-latest
+            platform: mac
+          - os: windows-latest
+            platform: linux
+          - os: macos-latest
             platform: win
           - os: macos-latest
-            platform: mac
-          - os: ubuntu-latest
             platform: linux
-
-        env:
-          - qa
-          - prod
+          - os: ubuntu-latest
+            platform: win
+          - os: ubuntu-latest
+            platform: mac
 
     runs-on: ${{ matrix.os }}
-
-    if: >-
-      ${{
-        github.event_name != 'workflow_dispatch' ||
-        inputs.env == 'both' ||
-        inputs.env == matrix.env
-      }}
 
     steps:
       - name: Checkout repository
@@ -65,5 +72,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: mai-studio-${{ matrix.env }}-${{ matrix.platform }}
-          path: dist/**
+          path: dist/${{ matrix.env }}/*
           if-no-files-found: error
