@@ -1,0 +1,70 @@
+{
+  "name": "mai-studio-desktop",
+  "version": "1.0.0",
+  "description": "MAI Studio desktop app",
+  "author": "MAI",
+  "private": true,
+  "main": "src/main.js",
+  "scripts": {
+    "dev": "cross-env STUDIO_ENV=dev electron .",
+    "qa": "cross-env STUDIO_ENV=qa electron .",
+    "prod": "cross-env STUDIO_ENV=prod electron .",
+    "pack:qa": "node build.mjs qa --dir",
+    "pack:prod": "node build.mjs prod --dir",
+    "dist:qa": "node build.mjs qa",
+    "dist:prod": "node build.mjs prod",
+    "dist:qa:win": "node build.mjs qa --win",
+    "dist:qa:mac": "node build.mjs qa --mac",
+    "dist:qa:linux": "node build.mjs qa --linux",
+    "dist:prod:win": "node build.mjs prod --win",
+    "dist:prod:mac": "node build.mjs prod --mac",
+    "dist:prod:linux": "node build.mjs prod --linux"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "electron": "^45.3.3",
+    "electron-builder": "^26.18.0"
+  },
+  "build": {
+    "appId": "ai.myproject.maistudio",
+    "productName": "MAI Studio",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "src/**",
+      "config/**",
+      "build/icon.png",
+      "package.json"
+    ],
+    "asar": true,
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.productivity",
+      "icon": "build/icon.png"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Graphics",
+      "icon": "build/icon.png",
+      "maintainer": "MAI <support@myproject.ai>"
+    },
+    "publish": null
+  }
+}

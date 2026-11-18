@@ -1,0 +1,5 @@
+{
+  "dev":  { "label": "DEV", "url": "http://localhost:3005",          "productName": "MAI Studio (Dev)", "appId": "ai.myproject.maistudio.dev" },
+  "qa":   { "label": "QA",  "url": "https://qa.myproject.design",    "productName": "MAI Studio (QA)",  "appId": "ai.myproject.maistudio.qa" },
+  "prod": { "label": "",    "url": "https://myproject.design",       "productName": "MAI Studio",       "appId": "ai.myproject.maistudio" }
+}
